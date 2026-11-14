@@ -2,6 +2,7 @@ import { Bird } from "./entities/bird.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+const startScreen = document.getElementById("startScreen");
 
 // Real game Resolution
 canvas.width = 400;
@@ -10,24 +11,50 @@ canvas.height = 600;
 // Craete bird
 const bird = new Bird(100, 250);
 
+let gameStarted = false;
 let gameOver = false;
+
+function startGame() {
+    if (!gameStarted && !gameOver) {
+        gameStarted = true;
+
+        // Hide start screen
+        startScreen.style.display = "none";
+        
+        // First flap
+        bird.flap();
+    }
+}
+
+function handleInput(event) {
+    if (event.code === "Space") {
+        event.preventDefault();
+    }
+
+    // Start the game
+    if (!gameStarted && !gameOver) {
+        startGame();
+        return;
+    }
+
+    // Flap while playing
+    if (gameStarted && !gameOver) {
+        bird.flap();
+    }
+}
 
 // Mouse click
 canvas.addEventListener("click", () => {
-    if (!gameOver) {
+    if (!gameStarted && !gameOver) {
+        startGame();
+    } else if (gameStarted && !gameOver) {
         bird.flap();
     }
 });
 
-window.addEventListener("keydown", (event) => {
-    if (event.code === "Space") {
-        event.preventDefault();
-        
-        if (!gameOver) {
-            bird.flap();
-        }
-    }
-});
+// KeyBoard
+window.addEventListener("keydown", handleInput);
+
 
 function gameLoop() {
 
@@ -41,14 +68,15 @@ function gameLoop() {
         canvas.height
     );
 
-    // Update game only when alive
-    if (!gameOver) {
+    // Update bird only when game is playing
+    if (gameStarted && !gameOver) {
         gameOver = bird.update(canvas.height);
     }
 
     // Draw bird
     bird.draw(ctx);
 
+    // show Game Over
     if (gameOver) {
         ctx.fillStyle = "white";
         ctx.font = "bold 40px Arial";
