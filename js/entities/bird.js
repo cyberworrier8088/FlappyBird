@@ -15,6 +15,10 @@ export class Bird {
         this.y += this.velocity;
     }
 
+    flap() {
+        this.velocity = -7;
+    }
+
     draw(ctx) {
         // Bird body
         ctx.fillStyle = "#ffd43b";

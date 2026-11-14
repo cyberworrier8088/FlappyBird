@@ -10,8 +10,21 @@ canvas.height = 600;
 // Craete bird
 const bird = new Bird(100, 250);
 
+// Mouse click
+canvas.addEventListener("click", () => {
+    bird.flap();
+});
+
+window.addEventListener("keydown", (event) => {
+    if (event.code === "Space") {
+        event.preventDefault();
+        bird.flap();
+    }
+})
+
 function gameLoop() {
 
+    // Draw background
     ctx.fillStyle = "#70c5ce"
 
     ctx.fillRect(
