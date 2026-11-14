@@ -10,17 +10,24 @@ canvas.height = 600;
 // Craete bird
 const bird = new Bird(100, 250);
 
+let gameOver = false;
+
 // Mouse click
 canvas.addEventListener("click", () => {
-    bird.flap();
+    if (!gameOver) {
+        bird.flap();
+    }
 });
 
 window.addEventListener("keydown", (event) => {
     if (event.code === "Space") {
         event.preventDefault();
-        bird.flap();
+        
+        if (!gameOver) {
+            bird.flap();
+        }
     }
-})
+});
 
 function gameLoop() {
 
@@ -34,11 +41,25 @@ function gameLoop() {
         canvas.height
     );
 
-    // Update bird phyics
-    bird.update();
+    // Update game only when alive
+    if (!gameOver) {
+        gameOver = bird.update(canvas.height);
+    }
 
     // Draw bird
     bird.draw(ctx);
+
+    if (gameOver) {
+        ctx.fillStyle = "white";
+        ctx.font = "bold 40px Arial";
+        ctx.textAlign = "center";
+
+        ctx.fillText(
+            "GAME OVER",
+            canvas.width / 2,
+            canvas.height / 2
+        );
+    }
 
     // Ask browser for the next frame
     requestAnimationFrame(gameLoop);
