@@ -5,6 +5,14 @@ export class Bird {
 
         this.width = 40;
         this.height = 30;
+
+        this.velocity = 0;
+        this.gravity = 0.4;
+    }
+
+    update() {
+        this.velocity += this.gravity;
+        this.y += this.velocity;
     }
 
     draw(ctx) {

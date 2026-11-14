@@ -10,17 +10,27 @@ canvas.height = 600;
 // Craete bird
 const bird = new Bird(100, 250);
 
-//  Draw background
-ctx.fillStyle = "#70c5ce"
+function gameLoop() {
 
-ctx.fillRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-);
+    ctx.fillStyle = "#70c5ce"
 
-// Draw bird
-bird.draw(ctx);
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    // Update bird phyics
+    bird.update();
+
+    // Draw bird
+    bird.draw(ctx);
+
+    // Ask browser for the next frame
+    requestAnimationFrame(gameLoop);
+}
+
+gameLoop();
 
 console.log("Flappy Bird loaded!")
