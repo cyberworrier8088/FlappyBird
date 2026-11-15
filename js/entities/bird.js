@@ -32,6 +32,12 @@ export class Bird {
         return false;
     }
 
+    reset(x, y) {
+        this.x = x;
+        this.y = y;
+        this.velocity = 0;
+    }
+
     flap() {
         this.velocity = -7;
     }

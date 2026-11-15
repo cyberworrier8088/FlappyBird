@@ -36,30 +36,67 @@ function startGame() {
     }
 }
 
+function restartGame() {
+
+    // reset bird
+    bird.reset(100, 250);
+
+    // remove all pipes
+    pipes.length = 0;
+
+    // reset pipe timer
+    pipeTimer = 0;
+
+    // reset score
+    score = 0;
+
+    // reset game state
+    gameOver = false;
+    gameStarted = true;
+
+    // start with a flap
+    bird.flap();
+
+}
+
 function handleInput(event) {
-    if (event.code === "Space") {
-        event.preventDefault();
+    if (event.code !== "Space") {
+        return;
     }
 
-    // Start the game
-    if (!gameStarted && !gameOver) {
+    event.preventDefault();
+
+    // Restart after game Over
+    if (gameOver) {
+        restartGame();
+        return;
+    }
+    
+    // Start game
+    if (!gameStarted) {
         startGame();
         return;
     }
 
     // Flap while playing
-    if (gameStarted && !gameOver) {
-        bird.flap();
-    }
+    bird.flap();
 }
 
 // Mouse click
 canvas.addEventListener("click", () => {
-    if (!gameStarted && !gameOver) {
-        startGame();
-    } else if (gameStarted && !gameOver) {
-        bird.flap();
+
+    if (gameOver) {
+        restartGame();
+        return;
     }
+
+    if (!gameStarted) {
+        startGame();
+        return;
+    }
+
+    // Flap while playing
+    bird.flap();
 });
 
 // KeyBoard
