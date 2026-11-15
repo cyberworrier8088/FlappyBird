@@ -7,7 +7,7 @@ export class Bird {
         this.height = 60;
 
         this.velocity = 0;
-        this.gravity = 0.4;
+        this.gravity = 0.3;
 
         this.image = new Image();
         this.image.src = "./assets/bird-1.gif"

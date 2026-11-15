@@ -19,6 +19,8 @@ const pipes = [];
 let pipeTimer = 0;
 const pipeInterval = 100;
 
+let score = 0;
+
 let gameStarted = false;
 let gameOver = false;
 
@@ -112,6 +114,13 @@ function gameLoop() {
             pipes.shift();
         }
 
+        for (const pipe of pipes) {
+            if (!pipe.passed && pipe.x + pipe.width < bird.x) {
+                pipe.passed = true;
+                score++;
+            }
+        }
+
     }
 
 
@@ -120,6 +129,17 @@ function gameLoop() {
     for (const pipe of pipes) {
         pipe.draw(ctx);
     }
+
+    // Draw score
+    ctx.fillStyle = "white";
+    ctx.font = "bold 40px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        score,
+        canvas.width / 2,
+        60
+    );
 
     birdSprite.style.left = `${bird.x}px`;
     birdSprite.style.top = `${bird.y}px`;

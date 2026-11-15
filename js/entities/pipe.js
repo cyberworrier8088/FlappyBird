@@ -14,6 +14,7 @@ export class Pipe {
         this.bottomY = this.topHeight + this.gap;
 
         this.speed = 2;
+        this.passed = false;
         this.canvasHeight = canvasHeight;
     }
     update() {
