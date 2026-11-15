@@ -3,6 +3,7 @@ import { Bird } from "./entities/bird.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const startScreen = document.getElementById("startScreen");
+const birdSprite = document.getElementById("birdSprite");
 
 // Real game Resolution
 canvas.width = 400;
@@ -73,8 +74,8 @@ function gameLoop() {
         gameOver = bird.update(canvas.height);
     }
 
-    // Draw bird
-    bird.draw(ctx);
+    birdSprite.style.left = `${bird.x}px`;
+    birdSprite.style.top = `${bird.y}px`;
 
     // show Game Over
     if (gameOver) {
