@@ -1,4 +1,5 @@
 import { Bird } from "./entities/bird.js";
+import { Pipe } from "./entities/pipe.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -11,6 +12,11 @@ canvas.height = 600;
 
 // Craete bird
 const bird = new Bird(100, 250);
+
+const pipes = [];
+
+let pipeTimer = 0;
+const pipeInterval = 100;
 
 let gameStarted = false;
 let gameOver = false;
@@ -72,6 +78,32 @@ function gameLoop() {
     // Update bird only when game is playing
     if (gameStarted && !gameOver) {
         gameOver = bird.update(canvas.height);
+
+        // Count frames
+        pipeTimer++;
+
+        if (pipeTimer >= pipeInterval) {
+            pipes.push(
+                new Pipe(
+                    canvas.width,
+                    canvas.height
+                )
+            );
+
+            pipeTimer = 0;
+        }
+
+        while (
+            pipes.length > 0 && pipes[0].isOffScreen()
+        ) {
+            pipes.shift();
+        }
+
+    }
+
+    // Move pipes
+    for (const pipe of pipes) {
+        pipe.draw(ctx);
     }
 
     birdSprite.style.left = `${bird.x}px`;
