@@ -1,5 +1,6 @@
 import { Bird } from "./entities/bird.js";
 import { Pipe } from "./entities/pipe.js";
+import { checkPipeCollision } from "./systems/collision.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -93,6 +94,18 @@ function gameLoop() {
             pipeTimer = 0;
         }
 
+        // Move pipes
+        for (const pipe of pipes) {
+            pipe.update();
+        }
+
+        for (const pipe of pipes) {
+            if (checkPipeCollision(bird, pipe)) {
+                gameOver = true;
+                break;
+            }
+        }
+
         while (
             pipes.length > 0 && pipes[0].isOffScreen()
         ) {
@@ -100,6 +113,8 @@ function gameLoop() {
         }
 
     }
+
+
 
     // Move pipes
     for (const pipe of pipes) {
