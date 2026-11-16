@@ -1,19 +1,21 @@
 export class Pipe {
     constructor(canvasWidth, canvasHeight) {
         this.width = 60;
-        this.gap = 160;
+        this.gap = 175;
 
         this.x = canvasWidth;
 
-        // Random top pipe height
-        const minHeight = 50;
-        const maxHeight = canvasHeight - this.gap - minHeight;
+        // keep pipe openings awaiy from extreme screen position
+        const minTopHeight = 70;
+        const safeBottomMargin = 70;
 
-        this.topHeight = Math.random() * (maxHeight - minHeight) + minHeight;
+        const maxTopHeight = canvasHeight - this.gap - safeBottomMargin;
+
+        this.topHeight = Math.random() * (maxTopHeight - minTopHeight) + minTopHeight;
 
         this.bottomY = this.topHeight + this.gap;
 
-        this.speed = 120; // pixels per second
+        this.speed = 140; // pixels per second
         this.passed = false;
         this.canvasHeight = canvasHeight;
     }

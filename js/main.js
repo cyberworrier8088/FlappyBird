@@ -35,7 +35,9 @@ const bird = new Bird(100, 250);
 const pipes = [];
 
 let pipeTimer = 0;
-const pipeInterval = 100;
+
+// spawn a new pipe evert 1.8 seocnds
+const pipeInterval = 1.8;
 
 let score = 0;
 
@@ -198,8 +200,8 @@ function gameLoop(timestamp) {
             audio.playHit();
         }
 
-        // Count frames
-        pipeTimer++;
+        // Count time in seconds
+        pipeTimer += deltaTime;
 
         if (pipeTimer >= pipeInterval) {
             pipes.push(
@@ -209,7 +211,7 @@ function gameLoop(timestamp) {
                 )
             );
 
-            pipeTimer = 0;
+            pipeTimer -= pipeInterval;
         }
 
         // Move pipes

@@ -7,8 +7,8 @@ export class Bird {
         this.height = 60;
 
         this.velocity = 0;
-        this.gravity = 1000;
-        this.flapStrength = -350;
+        this.gravity = 1100;
+        this.flapStrength = -420;
         this.maxFallSpeed = 500;
 
         this.image = new Image();
