@@ -75,3 +75,46 @@ body {
 #birdSprite {
     transform-origin: center;
 }
+
+/* Game Over screen */
+.game-over-screen {
+    position: absolute;
+    inset: 0;
+
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 20px;
+
+    background: rgba(0, 0, 0, 0.55);
+    color: white;
+    z-index: 5;
+}
+
+.game-over-screen h1 {
+    font-size: 36px;
+}
+
+.game-over-screen p {
+    font-size: 24px;
+}
+
+.game-over-screen button {
+    padding: 12px 28px;
+    border: 3px solid white;
+    border-radius: 8px;
+
+    background: #e9a52b;
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.game-over-screen button:hover {
+    background: #d58d15;
+}

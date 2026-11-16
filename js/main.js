@@ -7,6 +7,10 @@ const ctx = canvas.getContext("2d");
 const startScreen = document.getElementById("startScreen");
 const birdSprite = document.getElementById("birdSprite");
 
+const gameOverScreen = document.getElementById("gameOverScreen");
+const finalScore = document.getElementById("finalScore");
+const restartbutton = document.getElementById("restartButton");
+
 // Real game Resolution
 canvas.width = 400;
 canvas.height = 600;
@@ -70,7 +74,12 @@ function restartGame() {
     // start with a flap
     bird.flap();
 
+    gameOverScreen.style.display = "none";
+
 }
+
+// Register only once
+restartbutton.addEventListener("click", restartGame);
 
 function handleInput(event) {
     if (event.code !== "Space") {
@@ -232,15 +241,8 @@ function gameLoop() {
 
     // show Game Over
     if (gameOver) {
-        ctx.fillStyle = "white";
-        ctx.font = "bold 40px Arial";
-        ctx.textAlign = "center";
-
-        ctx.fillText(
-            "GAME OVER",
-            canvas.width / 2,
-            canvas.height / 2
-        );
+        gameOverScreen.style.display = "flex";
+        finalScore.textContent = score;
     }
 
     // Ask browser for the next frame
