@@ -71,3 +71,7 @@ body {
 
     pointer-events: none;
 }
+
+#birdSprite {
+    transform-origin: center;
+}

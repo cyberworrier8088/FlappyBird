@@ -132,11 +132,14 @@ function drawGround() {
     const groundY = canvas.height - groundHeight;
 
     ctx.drawImage(baseImage, groundX, groundY);
-    ctx.drawImage(
-        baseImage,
-        groundX + baseImage.width,
-        groundY
-    );
+    
+    for (let i = 0; i < 3; i++) {
+        ctx.drawImage(
+            baseImage,
+            groundX + i * baseImage.width,
+            groundY
+        );
+    }
 }
 
 function gameLoop() {
@@ -219,6 +222,13 @@ function gameLoop() {
 
     birdSprite.style.left = `${bird.x}px`;
     birdSprite.style.top = `${bird.y}px`;
+
+    const rotation = Math.max(
+        -25,
+        Math.min(70, bird.velocity * 4)
+    );
+
+    birdSprite.style.transform = `rotate(${rotation}deg)`;
 
     // show Game Over
     if (gameOver) {
