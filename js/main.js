@@ -1,6 +1,7 @@
 import { Bird } from "./entities/bird.js";
 import { Pipe } from "./entities/pipe.js";
 import { checkPipeCollision } from "./systems/collision.js";
+import { AudioManger } from "./systems/audio.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -41,9 +42,14 @@ let score = 0;
 let gameStarted = false;
 let gameOver = false;
 
+
+const audio = new AudioManger();
+
 function startGame() {
     if (!gameStarted && !gameOver) {
         gameStarted = true;
+
+        audio.playBGM();
 
         // Hide start screen
         startScreen.style.display = "none";
@@ -76,6 +82,9 @@ function restartGame() {
 
     gameOverScreen.style.display = "none";
 
+    audio.stopBGM();
+    audio.playBGM();
+
 }
 
 // Register only once
@@ -99,6 +108,8 @@ function handleInput(event) {
         startGame();
         return;
     }
+
+    audio.playWings();
 
     // Flap while playing
     bird.flap();
@@ -168,7 +179,11 @@ function gameLoop() {
 
     // Update bird only when game is playing
     if (gameStarted && !gameOver) {
-        gameOver = bird.update(canvas.height - groundHeight);
+        
+        if (bird.update(canvas.height - groundHeight)) {
+            gameOver = true;
+            audio.playHit();
+        }
 
         // Count frames
         pipeTimer++;
@@ -192,6 +207,7 @@ function gameLoop() {
         for (const pipe of pipes) {
             if (checkPipeCollision(bird, pipe)) {
                 gameOver = true;
+                audio.playHit();
                 break;
             }
         }
