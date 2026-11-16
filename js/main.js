@@ -11,6 +11,19 @@ const birdSprite = document.getElementById("birdSprite");
 canvas.width = 400;
 canvas.height = 600;
 
+
+// Load game Image
+const backgroundImage = new Image();
+backgroundImage.src = "./assets/background-day.png";
+
+const baseImage = new Image();
+baseImage.src = "./assets/base.png";
+
+// Ground settings
+const groundHeight = 112;
+let groundX = 0;
+const groundSpeed = 2;
+
 // Craete bird
 const bird = new Bird(100, 250);
 
@@ -103,21 +116,48 @@ canvas.addEventListener("click", () => {
 window.addEventListener("keydown", handleInput);
 
 
+function drawGround() {
+    groundX -= groundSpeed;
+
+    if (groundX <= -baseImage.width) {
+        groundX = 0;
+    }
+
+    if (!baseImage.complete) return;
+
+    const groundY = canvas.height - groundHeight;
+
+    ctx.drawImage(
+        baseImage,
+        groundX,
+        groundY
+    );
+
+    ctx.drawImage(
+        baseImage,
+        groundX + baseImage.width,
+        groundY
+    );
+}
+
 function gameLoop() {
 
     // Draw background
-    ctx.fillStyle = "#70c5ce"
+    if (backgroundImage.complete) {
+        ctx.drawImage(
+            backgroundImage,
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
+    }
 
-    ctx.fillRect(
-        0,
-        0,
-        canvas.width,
-        canvas.height
-    );
+    drawGround();
 
     // Update bird only when game is playing
     if (gameStarted && !gameOver) {
-        gameOver = bird.update(canvas.height);
+        gameOver = bird.update(canvas.height - groundHeight);
 
         // Count frames
         pipeTimer++;
@@ -126,7 +166,7 @@ function gameLoop() {
             pipes.push(
                 new Pipe(
                     canvas.width,
-                    canvas.height
+                    canvas.height - groundHeight
                 )
             );
 
