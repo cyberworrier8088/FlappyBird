@@ -13,12 +13,12 @@ export class Pipe {
 
         this.bottomY = this.topHeight + this.gap;
 
-        this.speed = 2;
+        this.speed = 120; // pixels per second
         this.passed = false;
         this.canvasHeight = canvasHeight;
     }
-    update() {
-        this.x -= this.speed;
+    update(deltaTime) {
+        this.x -= this.speed * deltaTime;
     }
     
     isOffScreen() {

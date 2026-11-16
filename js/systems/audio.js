@@ -20,7 +20,7 @@ export class AudioManger {
     }
 
     stopBGM() {
-        this.bgm.paused();
+        this.bgm.pause();
         this.bgm.currentTime = 0;
     }
 

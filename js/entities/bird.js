@@ -7,25 +7,35 @@ export class Bird {
         this.height = 60;
 
         this.velocity = 0;
-        this.gravity = 0.3;
+        this.gravity = 1000;
+        this.flapStrength = -350;
+        this.maxFallSpeed = 500;
 
         this.image = new Image();
         this.image.src = "./assets/bird-1.gif"
     }
 
-    update(canvasHeight) {
-        this.velocity += this.gravity;
-        this.y += this.velocity;
+    update(groundY, deltaTime) {
+        // apply gravity
+        this.velocity += this.gravity * deltaTime;
 
-        // Stop bird at the top
+        this.velocity = Math.min(
+            this.velocity,
+            this.maxFallSpeed
+        );
+
+        // Move bird
+        this.y += this.velocity * deltaTime;
+
+        // Stop at the top
         if (this.y < 0) {
             this.y = 0;
             this.velocity = 0;
         }
 
-        // check bottom boundary
-        if (this.y + this.height >= canvasHeight) {
-            this.y = canvasHeight - this.height;
+        // Ground collision
+        if (this.y + this.height >= groundY) {
+            this.y = groundY - this.height;
             return true;
         }
 
@@ -39,6 +49,6 @@ export class Bird {
     }
 
     flap() {
-        this.velocity = -7;
+        this.velocity = this.flapStrength;
     }
 }

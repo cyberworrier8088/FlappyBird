@@ -27,7 +27,7 @@ baseImage.src = "./assets/base.png";
 // Ground settings
 const groundHeight = 112;
 let groundX = 0;
-const groundSpeed = 2;
+const groundSpeed = 120;
 
 // Craete bird
 const bird = new Bird(100, 250);
@@ -136,13 +136,13 @@ canvas.addEventListener("click", () => {
 window.addEventListener("keydown", handleInput);
 
 
-function drawGround() {
+function drawGround(deltaTime) {
     if (!baseImage.complete || baseImage.naturalWidth === 0) {
         return;
     }
 
     if (gameStarted && !gameOver) {
-        groundX -= groundSpeed;
+        groundX -= groundSpeed * deltaTime;
 
         if (groundX <= -baseImage.width) {
             groundX = 0;
@@ -162,7 +162,20 @@ function drawGround() {
     }
 }
 
-function gameLoop() {
+let lastTime = 0;
+
+function gameLoop(timestamp) {
+
+    if (lastTime === 0) {
+        lastTime = timestamp;
+    }
+
+    let deltaTime = (timestamp - lastTime) / 1000;
+
+    // prevent huge physics jumps after a lag spike
+    deltaTime = Math.min(deltaTime, 0.032);
+
+    lastTime = timestamp;
 
     // Draw background
     if (backgroundImage.complete) {
@@ -175,12 +188,12 @@ function gameLoop() {
         );
     }
 
-    drawGround();
+    drawGround(deltaTime);
 
     // Update bird only when game is playing
     if (gameStarted && !gameOver) {
         
-        if (bird.update(canvas.height - groundHeight)) {
+        if (bird.update(canvas.height - groundHeight, deltaTime)) {
             gameOver = true;
             audio.playHit();
         }
@@ -201,7 +214,7 @@ function gameLoop() {
 
         // Move pipes
         for (const pipe of pipes) {
-            pipe.update();
+            pipe.update(deltaTime);
         }
 
         for (const pipe of pipes) {
