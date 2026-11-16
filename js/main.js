@@ -117,22 +117,21 @@ window.addEventListener("keydown", handleInput);
 
 
 function drawGround() {
-    groundX -= groundSpeed;
-
-    if (groundX <= -baseImage.width) {
-        groundX = 0;
+    if (!baseImage.complete || baseImage.naturalWidth === 0) {
+        return;
     }
 
-    if (!baseImage.complete) return;
+    if (gameStarted && !gameOver) {
+        groundX -= groundSpeed;
+
+        if (groundX <= -baseImage.width) {
+            groundX = 0;
+        }
+    }
 
     const groundY = canvas.height - groundHeight;
 
-    ctx.drawImage(
-        baseImage,
-        groundX,
-        groundY
-    );
-
+    ctx.drawImage(baseImage, groundX, groundY);
     ctx.drawImage(
         baseImage,
         groundX + baseImage.width,
