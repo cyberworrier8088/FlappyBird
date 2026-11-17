@@ -111,9 +111,8 @@ function handleInput(event) {
         return;
     }
 
+    // Play sound and flap
     audio.playWings();
-
-    // Flap while playing
     bird.flap();
 }
 
@@ -152,8 +151,6 @@ function drawGround(deltaTime) {
     }
 
     const groundY = canvas.height - groundHeight;
-
-    ctx.drawImage(baseImage, groundX, groundY);
     
     for (let i = 0; i < 3; i++) {
         ctx.drawImage(
@@ -280,6 +277,6 @@ function gameLoop(timestamp) {
     requestAnimationFrame(gameLoop);
 }
 
-gameLoop();
+requestAnimationFrame(gameLoop);
 
 console.log("Flappy Bird loaded!")
