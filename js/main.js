@@ -41,6 +41,12 @@ const pipeInterval = 1.8;
 
 let score = 0;
 
+let bestScore = Number(localStorage.getItem("flappyBestScore")) || 0;
+
+const bestScoreElement = document.getElementById("bestScore");
+
+bestScoreElement.textContent = bestScore;
+
 let gameStarted = false;
 let gameOver = false;
 
@@ -235,6 +241,14 @@ function gameLoop(timestamp) {
                 pipe.passed = true;
                 score++;
 
+                if (score > bestScore) {
+                    bestScore = score;
+
+                    localStorage.setItem("flappyBestScore", bestScore);
+
+                    bestScoreElement.textContent = bestScore;
+                }
+
                 audio.playPoint();
             }
         }
@@ -272,6 +286,7 @@ function gameLoop(timestamp) {
     // show Game Over
     if (gameOver) {
         gameOverScreen.style.display = "flex";
+        bestScoreElement.textContent = bestScore;
         finalScore.textContent = score;
     }
 
