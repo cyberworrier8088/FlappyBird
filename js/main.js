@@ -234,6 +234,8 @@ function gameLoop(timestamp) {
             if (!pipe.passed && pipe.x + pipe.width < bird.x) {
                 pipe.passed = true;
                 score++;
+
+                audio.playPoint();
             }
         }
 
