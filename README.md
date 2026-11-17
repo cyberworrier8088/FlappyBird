@@ -18,13 +18,19 @@ This Project is designed as an eductional project for beginners who want to unde
 
 ### Demo
 
-![DemoSite](https://flappygird.netlify.app/)
+**[Play Flappy Bird Online](https://flappygird.netlify.app/)**
 
-## Image Demo
+## Screenshot
 
-![img](assets/images/one.png)
-![img](assets/images/second.png)
-![img](assets/images/third.png)
+### Screenshot 1
+
+![Flappy Bird gameplay screenshot 1](assets/images/one.png)
+
+### Screenshot 2
+![Flappy Bird gameplay screenshot 2](assets/images/second.png)
+
+### Screenshot 3
+![Flappy Bird gameplay screenshot 3](assets/images/third.png)
 
 ## Controls
 
