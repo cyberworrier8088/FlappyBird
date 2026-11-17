@@ -24,13 +24,13 @@ This Project is designed as an eductional project for beginners who want to unde
 
 ### Screenshot 1
 
-![Flappy Bird gameplay screenshot 1](assets/images/one.png)
+![Flappy Bird gameplay screenshot 1](./assets/images/one.png)
 
 ### Screenshot 2
-![Flappy Bird gameplay screenshot 2](assets/images/second.png)
+![Flappy Bird gameplay screenshot 2](./assets/images/second.png)
 
 ### Screenshot 3
-![Flappy Bird gameplay screenshot 3](assets/images/third.png)
+![Flappy Bird gameplay screenshot 3](./assets/images/third.png)
 
 ## Controls
 
